@@ -2,7 +2,7 @@
 Site d'avis de restaurants intégrants des API
 
 
-###Cahier des charges
+### Cahier des charges
 
 Le site doit intégrer :
 - Une carte interactive Google Maps
