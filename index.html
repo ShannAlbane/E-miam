@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	 crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
+	<link href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css' rel='stylesheet' type='text/css'>
+	<link rel="icon" type="image/png" href="data/LogoIcone.png">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>E-miam</title>
+</head>
+
+<body>
+	<div class="container">
+		<header class="row">
+			<img id="logo" src="data/LogoBlanc.png" />
+		</header>
+		<form>
+			<div class="form-row">
+				<div class="col-sm-12 col-lg-6">
+					<!--<label for="cuisineSel"></label>
+					<select class="form-control" id="cuisineSel" onChange="refreshMarkers();">
+						<option value="allCuisine" selected>Veuillez choisir votre cuisine...</option>
+					</select>-->
+				</div>
+				<div class="col-sm-12 col-lg-6">
+					<label for="rate">Nombre d'étoiles souhaitées :</label>
+					<input type="text" id="rate" readonly />
+					<div id="slider-range"></div>
+				</div>
+			</div>
+		</form>
+		<div class="row">
+			<div class="col-lg-6" id="mapSide"></div>
+			<div class="col-lg-6 listeSide">
+				<div class="row accordion" id="accordionExample">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="saisieAvis" tabindex="-1" role="dialog" aria-labelledby="ajoutAvis" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="ajoutAvis">Ajout d'un avis</h5>
+					<input id="restoId" type="hidden" value="" />
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<label>Votre commentaire :
+						<textarea class="form-control" id="messageComment"></textarea>
+					</label>
+					<label>Votre note : <input class="form-control" type="text" id="addRatings" />(Doit être entre 0 et 5)</label>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal" onClick="addComment();">Ajouter</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="addRestoModal" class="modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-dialog-centered row" role="document">
+			<form onSubmit="return false">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Ajout d'un restaurant</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="col-lg-12">
+							<label>Le nom du restaurant : <input class="form-control col-lg-12" type="text" id="restoName" placeholder="Obligatoire"
+								 required></label>
+						</div>
+						<div class="col-lg-12">
+							<label>Adresse du restaurant : <input class="form-control" type="text" id="restoAdresse" placeholder="Obligatoire"
+								 required></label>
+						</div>
+						<!--<div class="col-lg-12">
+							<label>Type de cuisine : <input class="form-control" type="text" id="restoType" placeholder="Obligatoire"
+								 required></label>
+						</div>-->
+						<div class="col-lg-12">
+							<label>Votre commentaire
+								<textarea class="form-control" id="restoCom"></textarea>
+							</label>
+						</div>
+						<div class="col-lg-12">
+							<label>Votre note : <input class="form-control" type="number" max="5" id="restoRate" placeholder="Obligatoire"
+								 required></label>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+						<button type="submit" class="btn btn-primary closeModal" disabled>Ajouter un restaurant</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<!-- Librairies de Bootstrap + jQuery et jQuery UI -->
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	 crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+	 crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+	 crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+	 crossorigin="anonymous"></script>
+	<!-- Fin librairies de Bootstrap -->
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+	<script src="js/util.js"></script>
+	<script src="js/googleMap.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB48K7MnLGjHOLRg8YlZVgGg2kIj2zNrXU&libraries=places&callback=initMap"></script>
+	<script src="js/addJson.js"></script>
+	<script src="js/restaurant.js"></script>
+	<script src="js/googleMapEvent.js"></script>
+
+</body>
+
+</html>

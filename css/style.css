@@ -1,0 +1,45 @@
+#cuisineSel {
+	margin-bottom: 5px;
+	margin-right: 5px;
+}
+
+#mapSide {
+	height: 600px;
+}
+
+.speciality {
+	font-weight: bold;
+}
+
+.card-body {
+	font-size: 14px;
+}
+
+.btn {
+	font-size: 14px;
+}
+
+.restoRating {
+	margin: auto;
+}
+
+form {
+	width: 100%;
+}
+
+label{
+	display: block;
+}
+
+#rate {
+	font-weight: bold;
+	border: 0;
+}
+#logo {
+	width: 140pox;
+	height: 68px;
+}
+
+header {
+	background: #cc0000;
+}
